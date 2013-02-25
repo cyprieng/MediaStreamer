@@ -10,6 +10,7 @@
 				*/
 				function showArborescence($arborescence){
 					//On affiche le nom du dossier
+					if(!isset($arborescence[0])) return;
 					echo '<ul><i class="icon-folder-close"></i><a href="#">'.substr(strrchr($arborescence[0],'/'),1).'</a><br/>';
 					unset($arborescence[0]);
 					
