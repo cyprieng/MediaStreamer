@@ -63,8 +63,8 @@
 								
 								ftruncate($configFile,0);
 								fputs($configFile, "<?php\n");
-								fputs($configFile, "	define('ROOT_PATH', '".$rootPath."');\n");
-								fputs($configFile, "	define('ROOT_PATH_HTML', '".$htmlPath."');\n");
+								fputs($configFile, "	define('ROOT_PATH', '".preg_replace('/\\\\/', '/', $rootPath)."');\n");
+								fputs($configFile, "	define('ROOT_PATH_HTML', '".preg_replace('/\\\\/', '/', $htmlPath)."');\n");
 								fputs($configFile, "\n");
 								fputs($configFile, "	//Identifiants pour la BDD\n");
 								fputs($configFile, "	define('SQL_DSN',		'mysql:dbname=".$_POST['baseSQL'].";host=".$_POST['serverSQL']."');\n");
