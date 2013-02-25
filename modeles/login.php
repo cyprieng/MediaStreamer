@@ -7,6 +7,7 @@
 	*/
 	function testLogin($login, $pass){
 		if(isset($login) && isset($pass)){
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('SELECT COUNT(*) AS nbr FROM user WHERE name =:name && password =:password');
 			$query->execute(array(

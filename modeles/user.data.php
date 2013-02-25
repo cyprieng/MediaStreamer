@@ -7,6 +7,7 @@
 		if(isConnected()){
 			$id = getId();
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('SELECT music_folder FROM user WHERE name =:name && password =:password');
 			$query->execute(array(
@@ -28,6 +29,7 @@
 		if(isConnected()){
 			$id = getId();
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('SELECT video_folder FROM user WHERE name =:name && password =:password');
 			$query->execute(array(
@@ -49,6 +51,7 @@
 		if(isConnected()){
 			$id = getId();
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('SELECT podcast FROM user WHERE name =:name && password =:password');
 			$query->execute(array(
@@ -70,6 +73,7 @@
 		if(isConnected()){
 			$id = getId();
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('SELECT lastfm_session FROM user WHERE name =:name && password =:password');
 			$query->execute(array(
@@ -91,6 +95,7 @@
 		if(isConnected()){
 			$id = getId();
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('SELECT admin FROM user WHERE name =:name && password =:password');
 			$query->execute(array(

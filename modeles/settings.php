@@ -8,6 +8,7 @@
 		if(isConnected()){
 			$id = getId();
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('UPDATE user SET lastfm_session =:session WHERE name =:name && password =:password');
 			$query->execute(array(
@@ -32,6 +33,7 @@
 			$testOld = testLogin($id[0], sha1($id[0].$old)); //On vérifit l'ancien mdp
 
 			if($testOld){
+				$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 				$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 				$query=$bdd->prepare('UPDATE user SET password =:new WHERE name =:name && password =:old');
 				$query->execute(array(
@@ -57,6 +59,7 @@
 		if(isConnected()){
 			$id = getId();
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('UPDATE user SET podcast =:podcast WHERE name =:name && password =:password');
 			$query->execute(array(
@@ -75,6 +78,7 @@
 	*/
 	function getUserArray(){
 		$user = array();
+		$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 		$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 		$query=$bdd->query('SELECT id, name, music_folder, video_folder, podcast, lastfm_session FROM user ORDER BY id');
 
@@ -103,6 +107,7 @@
 	*/
 	function saveUser($id, $name, $password, $music_folder, $video_folder){
 		if(is_numeric($id)){ //Modification user
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$query=$bdd->prepare('UPDATE user SET music_folder =:music_folder, video_folder = :video_folder  WHERE id =:id');
 			$query->execute(array(
@@ -116,6 +121,7 @@
 		else if($id = 'add'){ //Ajout user
 			$password = sha1($name.$password);
 
+			$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 			$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 			$req = $bdd->prepare('INSERT INTO user(name, password, music_folder, video_folder) VALUES(:name, :password, :music_folder, :video_folder)');
 			$req->execute(array(
@@ -135,6 +141,7 @@
 	@params	id		Id de l'user
 	*/
 	function deleteUser($id){
+		$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 		$bdd = new PDO(SQL_DSN, SQL_USERNAME, SQL_PASSWORD, $pdo_options);
 		$req = $bdd->prepare('DELETE FROM user WHERE id =:id');
 
