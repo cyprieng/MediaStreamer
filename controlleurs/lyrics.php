@@ -5,5 +5,5 @@
 	mustConnected(); //On vérifit que l'utilisateur est connecté
 
 	//On affiche les paroles
-	echo '<lyrics>'.lyrics($_GET['file']).'</lyrics>';
+	echo '<lyrics>'.lyrics(urldecode($_GET['file'])).'</lyrics>';
 ?>

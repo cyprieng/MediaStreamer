@@ -109,37 +109,6 @@
 			});
 		});
 
-		/* 
-		Scrobble la musique sur lastfm si 50% s'est écoulé
-		*/
-		function scrobble(){
-			if($('#player').attr('src') != ''){ //Une chanson est en lecture
-				if($('#player')[0].currentTime / $('#player')[0].duration >= 0.5){ //50% s'est écoulé => on scrobble
-					//On récupère la musique
-					var file = $('#player').attr('src');
-					file = file.replace('<?php echo MODELE_PATH; ?>media.php?file=', '');
-
-					//on appel le script php
-					$.ajax({
-						type: 'GET',
-						url: '<?php echo ROOT_PATH_HTML; ?>index.php',
-						data: {
-							p : 'scrobbler',
-							file : file,
-						},
-					});
-				}
-				else{
-					//On relance la fonction
-					setTimeout(scrobble, 5000);
-				}
-			}
-			else{
-				//On relance la fonction
-				setTimeout(scrobble, 5000);
-			}
-		}
-
 		/*
 		Lit la chanson
 		@params	id	Numéro de la chanson dans la playlist
@@ -215,36 +184,6 @@
 		$('.span4:eq(1) a:eq(1)').click(nextTrack);
 
 		/*
-		Affiche les paroles de la piste en cours
-		*/
-		function lyrics(){
-			$('#lyrics pre').remove();
-
-			//On récupère le ficier
-			var file = $('#player').attr('src');
-			file = file.replace('<?php echo MODELE_PATH; ?>media.php?file=', '');
-
-			//on appel le script php
-			$.ajax({
-				type: 'GET',
-				url: '<?php echo ROOT_PATH_HTML; ?>index.php',
-				data: {
-					p : 'lyrics',
-					file : file,
-				},
-
-				success: function(data, textStatus, jqXHR){
-					$('#lyrics pre').remove();
-
-					//On récupère et on affiche les lyrics
-					$('#lyrics').append('<pre style="display:none;">'+data+'</pre>');
-					var lyrics = $('#lyrics lyrics').text();
-					$('#lyrics pre').text(lyrics).css('display', '');
-				}
-			});
-		}
-
-		/*
 		Ajoute le contenu d'un dossier à la playlist
 		*/
 		function addFolderToPlaylist(){
@@ -277,6 +216,74 @@
 		addFolderToPlaylist();
 	};
 
+	/* 
+	Scrobble la musique sur lastfm si 50% s'est écoulé
+	*/
+	function scrobble(){
+		if($('#player').attr('src') != ''){ //Une chanson est en lecture
+			if($('#player')[0].currentTime / $('#player')[0].duration >= 0.5){ //50% s'est écoulé => on scrobble
+				//On récupère la musique
+				var file = $('#player').attr('src');
+				file = file.replace('<?php echo MODELE_PATH; ?>media.php?file=', '');
+
+				//on appel le script php
+				$.ajax({
+					type: 'GET',
+					url: '<?php echo ROOT_PATH_HTML; ?>index.php',
+					data: {
+						p : 'scrobbler',
+						file : file,
+					},
+				});
+			}
+			else{
+				//On relance la fonction
+				setTimeout(scrobble, 5000);
+			}
+		}
+		else{
+			//On relance la fonction
+			setTimeout(scrobble, 5000);
+		}
+	}
+
+	/*
+	Affiche les paroles de la piste en cours
+	*/
+	function lyrics(){
+		$('#lyrics pre').remove();
+
+		//On récupère le ficier
+		var file = $('#player').attr('src');
+		file = file.replace('<?php echo MODELE_PATH; ?>media.php?file=', '');
+
+		//on appel le script php
+		$.ajax({
+			type: 'GET',
+			url: '<?php echo ROOT_PATH_HTML; ?>index.php',
+			data: {
+				p : 'lyrics',
+				file : file,
+			},
+
+			success: function(data, textStatus, jqXHR){
+				$('#lyrics pre').remove();
+
+				//On récupère et on affiche les lyrics
+				$('#lyrics').append('<pre style="display:none;">'+data+'</pre>');
+				var lyrics = $('#lyrics lyrics').html();
+				$('#lyrics pre').html(lyrics).css('display', '');
+				var i=1;
+				$('#lyrics pre br').each(function(){
+					if(i%2 == 0){
+						$(this).remove();
+					}
+					i++;
+				});
+			}
+		});
+	}
+
 	/*
 	On initialise la piste lors de l'ajout
 	*/
@@ -302,6 +309,7 @@
 				$('#playlist li i').remove();
 				$(this).append('<i class="icon-music"></i>');
 				$('#player')[0].play();
+
 				lyrics();
 				scrobble();
 			});
