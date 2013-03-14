@@ -8,6 +8,7 @@
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link href="<?php echo CSS_PATH; ?>bootstrap.min.css" rel="stylesheet">
+		<link href="<?php echo CSS_PATH; ?>flat-ui.css" rel="stylesheet">
 		<link href="<?php echo CSS_PATH; ?>jquery-ui.css" rel="stylesheet">
 		<link href="<?php echo CSS_PATH; ?>main.css" rel="stylesheet">
 		<link rel="shortcut icon" type="image/x-icon" href="<?php echo IMAGE_PATH; ?>favicon.png" />

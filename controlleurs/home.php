@@ -9,6 +9,7 @@
 	if(is_dir($music_path)){
 		//On récupère l'arborescence
 		$arborescence = getArborescence($music_path, explode(', ', MUSIC_EXTENSION));
+		unset($arborescence[0]);
 	}
 	else{ //Le dossier n'en est pas un
 		$arborescence = array();

@@ -1,15 +1,25 @@
+<div class="row-fluid" id="player-container">
+	<div class="span8 offset1">
+		<audio id="player" src="" controls></audio>
+	</div>
+	<div class="span2">
+		<a class="btn btn-small" href="#"><i class="icon-fast-backward"></i></a>
+		<a class="btn btn-small" href="#"><i class="icon-fast-forward"></i></a>
+		<a class="btn btn-small" href="#" onclick="random();"><i class="icon-random"></i></a>
+		<a class="btn btn-small" href="#" onclick="$(this).toggleClass('active');"><i class="icon-repeat"></i></a>
+	</div>
+</div>
+<br/><br/><br/><br/>
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span5" id="mediaList">
 			<?php
-				//On affiche le nom du dossier
-				echo '<ul><i class="icon-folder-close"></i><a href="#">Podcast</a><br/>';
-				
 				//Affiche l'arboresence des podcast (see modeles/podcast.php)
 				foreach($podcast as $arbo){ //Podcast
 					foreach($arbo as $id => $pod){ //Elt d'un podcast
 						if($id == 0){ //Titre du podcast
-							echo '<ul><i class="icon-folder-close"></i><a href="#">'.substr(strrchr($pod,'/'),1).'</a><br/>';
+
+							echo '<ul><i class="icon-folder-close"></i><a href="#">'.basename($pod, '.xml').'</a><br/>';
 						}
 						else{ //Piste du podcast
 							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.$pod[0].'" onclick="$(\'#playlistPodcast\').append(\'<li class=\\\'ui-state-default\\\' src=\\\''.MODELE_PATH.'media.php?file='.urlencode($pod[0]).'\\\'>'.addslashes(preg_replace('#"#', '\'\'', Trim($pod[1]))).'</li>\');trackInit();return false;">'.Trim($pod[1]).'</a></li>';
@@ -17,17 +27,10 @@
 					}
 					echo '</ul>';
 				}
-				echo '</ul>';
 			?>	
 		</div>
-		<div class="span5">
-		 	<audio id="player" src="" controls></audio><br/>
-		 	<a class="btn btn-small" href="#"><i class="icon-fast-backward"></i></a>
-			<a class="btn btn-small" href="#"><i class="icon-fast-forward"></i></a>
-			<a class="btn btn-small" href="#" onclick="random();"><i class="icon-random"></i></a>
-			<a class="btn btn-small" href="#" onclick="$(this).toggleClass('active');"><i class="icon-repeat"></i></a>
-
-		 	<br/><br/>
+		<div class="span7">
+			<div class="separator"></div>
 		 	<h3>playlist</h3>
 		 	<ul id="playlistPodcast">
 			</ul>
@@ -40,12 +43,10 @@
 		//On affiche uniquement la racine
 		$('#mediaList ul').css('display', 'none');
 		$('#mediaList li').css('display', 'none');
-		$('#mediaList ul:eq(0)').css('display', '');
+		$('#mediaList > ul').css('display', '');
 
 		//playlistPodcast sortable cf jqueryui
-		$('#playlistPodcast').sortable({
-			placeholder: "ui-state-highlight"
-		});
+		$('#playlistPodcast').sortable();
 		$('#playlistPodcast').disableSelection();
 
 		/* 
@@ -165,8 +166,8 @@
 		}
 
 		//On affecte les actions aux boutons suivants/précédents
-		$('.span5:eq(1) a:eq(0)').click(previousTrack);
-		$('.span5:eq(1) a:eq(1)').click(nextTrack);
+		$('#player-container a:eq(0)').click(previousTrack);
+		$('#player-container a:eq(1)').click(nextTrack);
 
 		/*
 		Ajoute le contenu d'un dossier à la playlistPodcast

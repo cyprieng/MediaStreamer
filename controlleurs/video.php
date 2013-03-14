@@ -9,6 +9,7 @@
 	if(is_dir($video_path)){
 		//On récupère l'arborescence
 		$arborescence = getArborescence($video_path, explode(', ', VIDEO_EXTENSION));
+		unset($arborescence[0]);
 	}
 	else{ //Le dossier n'en est pas un
 		$arborescence = array();

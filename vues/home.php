@@ -1,3 +1,15 @@
+<div class="row-fluid" id="player-container">
+	<div class="span8 offset1">
+		<audio id="player" src="" controls></audio>
+	</div>
+	<div class="span2">
+		<a class="btn btn-small" href="#"><i class="icon-fast-backward"></i></a>
+		<a class="btn btn-small" href="#"><i class="icon-fast-forward"></i></a>
+		<a class="btn btn-small" href="#" onclick="random();"><i class="icon-random"></i></a>
+		<a class="btn btn-small" href="#" onclick="$(this).toggleClass('active');"><i class="icon-repeat"></i></a>
+	</div>
+</div>
+<br/><br/><br/><br/>
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span4" id="mediaList">
@@ -19,28 +31,28 @@
 							showArborescence($arbo);
 						}
 						else{ //Fichier => on l'affiche
-							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.$arbo.'" onclick="$(\'#playlist\').append(\'<li class=\\\'ui-state-default\\\' src=\\\''.MODELE_PATH.'media.php?file='.urlencode($arbo).'\\\'>'.addslashes(substr(strrchr($arbo,'/'),1)).'</li>\');trackInit();return false;">'.substr(strrchr($arbo,'/'),1).'</a></li>';
+							$info = pathinfo($arbo);
+							$file_name = basename($arbo,'.'.$info['extension']);
+
+							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.$arbo.'" onclick="$(\'#playlist\').append(\'<li class=\\\'ui-state-default\\\' src=\\\''.MODELE_PATH.'media.php?file='.urlencode($arbo).'\\\'>'.addslashes($file_name).'</li>\');trackInit();return false;">'.$file_name.'</a></li>';
 						}
 					}
 					echo '</ul>';
 				}
 
-				showArborescence($arborescence); //On affiche l'arborescence
+				foreach($arborescence as $arbo){
+					showArborescence($arbo); //On affiche l'arborescence
+				}
 			?>	
 		</div>
 		<div class="span4">
-		 	<audio id="player" src="" controls></audio><br/>
-		 	<a class="btn btn-small" href="#"><i class="icon-fast-backward"></i></a>
-			<a class="btn btn-small" href="#"><i class="icon-fast-forward"></i></a>
-			<a class="btn btn-small" href="#" onclick="random();"><i class="icon-random"></i></a>
-			<a class="btn btn-small" href="#" onclick="$(this).toggleClass('active');"><i class="icon-repeat"></i></a>
-
-		 	<br/><br/>
+			<div class="separator"></div>
 		 	<h3>Playlist</h3>
 		 	<ul id="playlist">
 			</ul>
 		</div>
 		<div class="span4" id="lyrics">
+			<div class="separator"></div>
 		 	<h3>Lyrics</h3>
 		</div>
 	</div>
@@ -51,12 +63,10 @@
 		//On affiche uniquement la racine
 		$('#mediaList ul').css('display', 'none');
 		$('#mediaList li').css('display', 'none');
-		$('#mediaList ul:eq(0)').css('display', '');
+		$('#mediaList > ul').css('display', '');
 
 		//Playlist sortable cf jqueryui
-		$('#playlist').sortable({
-			placeholder: "ui-state-highlight"
-		});
+		$('#playlist').sortable();
 		$('#playlist').disableSelection();
 
 		/* 
@@ -180,8 +190,8 @@
 		}
 
 		//On affecte les actions aux boutons suivants/précédents
-		$('.span4:eq(1) a:eq(0)').click(previousTrack);
-		$('.span4:eq(1) a:eq(1)').click(nextTrack);
+		$('#player-container a:eq(0)').click(previousTrack);
+		$('#player-container a:eq(1)').click(nextTrack);
 
 		/*
 		Ajoute le contenu d'un dossier à la playlist

@@ -19,17 +19,23 @@
 							showArborescence($arbo);
 						}
 						else{ //Fichier => on l'affiche
-							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.$arbo.'" onclick="player.play(\''.MODELE_PATH.'media.php?file='.$arbo.'\');return false;">'.substr(strrchr($arbo,'/'),1).'</a></li>';
+							$info = pathinfo($arbo);
+							$file_name = basename($arbo,'.'.$info['extension']);
+
+							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.$arbo.'" onclick="player.play(\''.MODELE_PATH.'media.php?file='.$arbo.'\');return false;">'.$file_name.'</a></li>';
 						}
 					}
 					echo '</ul>';
 				}
 
-				showArborescence($arborescence); //On affiche l'arborescence
+				foreach($arborescence as $arbo){
+					showArborescence($arbo); //On affiche l'arborescence
+				}
 			?>	
 		</div>
 
 		<div class="span6">
+			<div class="separator"></div>
 			<div id="vlc1"></div>
 		</div>
 	</div>
@@ -48,7 +54,7 @@
 		//On affiche uniquement la racine
 		$('#mediaList ul').css('display', 'none');
 		$('#mediaList li').css('display', 'none');
-		$('#mediaList ul:eq(0)').css('display', '');
+		$('#mediaList > ul').css('display', '');
 
 		/* 
 		Affiche le contenu d'un dossier

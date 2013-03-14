@@ -1,25 +1,58 @@
-*{margin:0;padding:0;}
-
+/* --------------
+ * GLOBAL
+ * -------------*/
 body{
 	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
+
+/*Separator between column*/
+.separator{
+	position:fixed;
+	z-index:1;
+	margin-top:-17px;
+	margin-left:-10px;
+	height:100%;
+	border-left:1px solid #e3e3e3;
+}
+
+/* --------------
+ * PLAYER
+ * -------------*/
+#player-container{
+	position:fixed;
+	z-index:9999;
+	background:#3F6873;
+	margin-top:-8px; 
+	height:60px;
+}
+#player-container audio{
+	margin-top:10px;
+	width:100%;
+}
+#player-container a{margin-top:15px;}
+
+/* --------------
+ * LIBRARY
+ * -------------*/
 #mediaList li{
 	margin-left:30px; /*Margin for arborescence*/
 }
 #mediaList .icon-play-circle{cursor:pointer;}
 
-/*Music playlist*/
-#playlist{list-style-type:none;margin:0;padding:0;width: 90%;}
-#playlist li{margin:0 5px 5px 5px;padding:5px;font-size:1.2em;height: 1.5em;}
-html>body #playlist li{height:1.5em;line-height:1.2em;}
-.ui-state-highlight{height:1.5em;line-height:1.2em;}
-
+/* --------------
+ * PLAYLIST
+ * -------------*/
+#playlist, #playlistPodcast{list-style-type:none;margin:0;padding:0;width: 90%;}
+#playlist li, #playlistPodcast li{
+	background:transparent;
+	color:#1abc9c;
+	cursor:pointer;
+	border:none;
+	border-bottom:1px solid #e3e3e3;;
+}
 #playlist .icon-music{position:absolute;left:61%;}
 #playlist .icon-remove{position:absolute;left:59%;cursor:pointer;}
 
 /*Podcast playlist*/
-#playlistPodcast .icon-music{position:absolute;left:77%;}
-#playlistPodcast .icon-remove{position:absolute;left:76%;cursor:pointer;}
-#playlistPodcast{list-style-type:none;margin:0;padding:0;width: 90%;}
-#playlistPodcast li{margin:0 5px 5px 5px;padding:5px;font-size:1.2em;height: 1.5em;}
-html>body #playlistPodcast li{height:1.5em;line-height:1.2em;}
+#playlistPodcast .icon-music{position:absolute;left:92%;}
+#playlistPodcast .icon-remove{position:absolute;left:91%;cursor:pointer;}
