@@ -19,7 +19,7 @@
 					foreach($arbo as $id => $pod){ //Elt d'un podcast
 						if($id == 0){ //Titre du podcast
 
-							echo '<ul><i class="icon-folder-close"></i><a href="#">'.basename($pod, '.xml').'</a><br/>';
+							echo '<ul><span class="addToLibrary"><i class="icon-folder-close"></i><a href="#">'.basename($pod, '.xml').'</a></span><br/>';
 						}
 						else{ //Piste du podcast
 							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.$pod[0].'" onclick="$(\'#playlistPodcast\').append(\'<li class=\\\'ui-state-default\\\' src=\\\''.MODELE_PATH.'media.php?file='.urlencode($pod[0]).'\\\'>'.addslashes(preg_replace('#"#', '\'\'', Trim($pod[1]))).'</li>\');trackInit();return false;">'.Trim($pod[1]).'</a></li>';
@@ -55,13 +55,13 @@
 		*/
 		function showChild(element){
 			//On affiche le contenu
-			element.children('.icon-folder-close').attr('class', 'icon-folder-open');
+			element.children('.addToLibrary').children('.icon-folder-close').attr('class', 'icon-folder-open');
 			element.children('ul').css('display', '');
 			element.children('li').css('display', '');
 
 			//Lors du prochain clic on cache
-			element.click(function(){ 
-				hideChild($(this));
+			element.children('.addToLibrary').click(function(){ 
+				hideChild($(this).parent('ul'));
 				return false;
 			});
 		}
@@ -72,29 +72,22 @@
 		*/
 		function hideChild(element){
 			//On cache le contenu
-			element.children('.icon-folder-open').attr('class', 'icon-folder-close');
+			element.children('.addToLibrary').children('.icon-folder-open').attr('class', 'icon-folder-close');
 			element.children('ul').css('display', 'none');
 			element.children('li').css('display', 'none');
 
 			//Lors du prochain clic on affiche
-			element.click(function(){
-				showChild($(this));
+			element.children('.addToLibrary').click(function(){
+				showChild($(this).parent('ul'));
 				return false;
 			});
 		}
 
 		//On attache les évènement aux dossier
-		$('#mediaList ul').each(function(){
+		$('#mediaList .addToLibrary').each(function(){
 			$(this).click(function(){
-				showChild($(this));
+				showChild($(this).parent('ul'));
 
-				return false;
-			});
-		});
-
-		//On le supprime pour les liens
-		$('#mediaList li').each(function(){
-			$(this).click(function(){
 				return false;
 			});
 		});
@@ -175,7 +168,7 @@
 		function addFolderToplaylistPodcast(){
 			$('#mediaList ul').each(function(){ //On boucle les dossier
 				$(this).mouseenter(function(){ //Mouse enter => bouton
-					$(this).children('a:eq(0)').after('<i class="icon-play-circle"></i>');
+					$(this).children('.addToLibrary').after('<i class="icon-play-circle"></i>');
 
 					$('.icon-play-circle').click(function(){ //On ajoute le contenu du dossier
 						//On déclenche le click de toutes les pistes du dossier

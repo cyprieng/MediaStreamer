@@ -23,7 +23,7 @@
 				function showArborescence($arborescence){
 					//On affiche le nom du dossier
 					if(!isset($arborescence[0])) return;
-					echo '<ul><i class="icon-folder-close"></i><a href="#">'.substr(strrchr($arborescence[0],'/'),1).'</a><br/>';
+					echo '<ul><span class="addToLibrary"><i class="icon-folder-close"></i><a href="#">'.substr(strrchr($arborescence[0],'/'),1).'</a></span><br/>';
 					unset($arborescence[0]);
 					
 					foreach($arborescence as $arbo){
@@ -75,13 +75,13 @@
 		*/
 		function showChild(element){
 			//On affiche le contenu
-			element.children('.icon-folder-close').attr('class', 'icon-folder-open');
+			element.children('.addToLibrary').children('.icon-folder-close').attr('class', 'icon-folder-open');
 			element.children('ul').css('display', '');
 			element.children('li').css('display', '');
 
 			//Lors du prochain clic on cache
-			element.click(function(){ 
-				hideChild($(this));
+			element.children('.addToLibrary').click(function(){ 
+				hideChild($(this).parent('ul'));
 				return false;
 			});
 		}
@@ -92,29 +92,22 @@
 		*/
 		function hideChild(element){
 			//On cache le contenu
-			element.children('.icon-folder-open').attr('class', 'icon-folder-close');
+			element.children('.addToLibrary').children('.icon-folder-open').attr('class', 'icon-folder-close');
 			element.children('ul').css('display', 'none');
 			element.children('li').css('display', 'none');
 
 			//Lors du prochain clic on affiche
-			element.click(function(){
-				showChild($(this));
+			element.children('.addToLibrary').click(function(){
+				showChild($(this).parent('ul'));
 				return false;
 			});
 		}
 
 		//On attache les évènement aux dossier
-		$('#mediaList ul').each(function(){
+		$('#mediaList .addToLibrary').each(function(){
 			$(this).click(function(){
-				showChild($(this));
+				showChild($(this).parent('ul'));
 
-				return false;
-			});
-		});
-
-		//On le supprime pour les liens
-		$('#mediaList li').each(function(){
-			$(this).click(function(){
 				return false;
 			});
 		});
@@ -199,7 +192,7 @@
 		function addFolderToPlaylist(){
 			$('#mediaList ul').each(function(){ //On boucle les dossier
 				$(this).mouseenter(function(){ //Mouse enter => bouton
-					$(this).children('a:eq(0)').after('<i class="icon-play-circle"></i>');
+					$(this).children('.addToLibrary').after('<i class="icon-play-circle"></i>');
 
 					$('.icon-play-circle').click(function(){ //On ajoute le contenu du dossier
 						//On déclenche le click de toutes les pistes du dossier
