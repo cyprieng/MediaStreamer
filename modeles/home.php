@@ -9,7 +9,10 @@
 		$pointeur = opendir($folder); //on ouvre un pointeur sur le repertoire
 		$arborescence[] = $folder; //Première case => nom dossier
 
-		while($file = readdir($pointeur)){ //pour chaque fichier et dossier
+		//Récupération dossier dans l'ordre alphabétique
+		$sub_folder = scandir($folder, 2);
+		natcasesort($sub_folder);
+		foreach($sub_folder as $file){
 			if(($file != '.') && ($file != '..')){ //on ne traite pas les . et ..
 				if (is_dir($folder.'/'.$file)){ //si c'est un dossier, on le lit   
 					$arborescence[] = getArborescence($folder.'/'.$file, $extension);
