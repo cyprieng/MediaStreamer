@@ -57,44 +57,28 @@
 		$('#mediaList > ul').css('display', '');
 
 		/* 
-		Affiche le contenu d'un dossier
+		Cache ou affiche le contenu d'un dossier
 		@params	element	Dossier cliqué
 		*/
-		function showChild(element){
-			//On affiche le contenu
-			element.children('.addToLibrary').children('.icon-folder-close').attr('class', 'icon-folder-open');
-			element.children('ul').css('display', '');
-			element.children('li').css('display', '');
-
-			//Lors du prochain clic on cache
-			element.children('.addToLibrary').click(function(){ 
-				hideChild($(this).parent('ul'));
-				return false;
-			});
-		}
-
-		/* 
-		Cache le contenu d'un dossier
-		@params	element	Dossier cliqué
-		*/
-		function hideChild(element){
-			//On cache le contenu
-			element.children('.addToLibrary').children('.icon-folder-open').attr('class', 'icon-folder-close');
-			element.children('ul').css('display', 'none');
-			element.children('li').css('display', 'none');
-
-			//Lors du prochain clic on affiche
-			element.children('.addToLibrary').click(function(){
-				showChild($(this).parent('ul'));
-				return false;
-			});
+		function toggleChild(element){
+			if(element.children('ul').css('display') == 'none' || element.children('li').css('display') == 'none'){
+				//On affiche le contenu
+				element.children('.addToLibrary').children('.icon-folder-close').attr('class', 'icon-folder-open');
+				element.children('ul').css('display', '');
+				element.children('li').css('display', '');
+			}
+			else{
+				//On cache le contenu
+				element.children('.addToLibrary').children('.icon-folder-open').attr('class', 'icon-folder-close');
+				element.children('ul').css('display', 'none');
+				element.children('li').css('display', 'none');
+			}
 		}
 
 		//On attache les évènement aux dossier
 		$('#mediaList .addToLibrary').each(function(){
 			$(this).click(function(){
-				showChild($(this).parent('ul'));
-
+				toggleChild($(this).parent('ul'));
 				return false;
 			});
 		});
