@@ -22,7 +22,7 @@
 							$info = pathinfo($arbo);
 							$file_name = basename($arbo,'.'.$info['extension']);
 
-							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.$arbo.'" onclick="player.play(\''.MODELE_PATH.'media.php?file='.$arbo.'\');return false;">'.$file_name.'</a></li>';
+							echo '<li><i class="icon-file"></i><a href="'.MODELE_PATH.'media.php?file='.urlencode($arbo).'&u='.$_SESSION['name'].'&p='.$_SESSION['pass'].'" onclick="$(\'#videoPlayer embed\').attr(\'target\', \''.MODELE_PATH.'media.php?file='.urlencode($arbo).'&u='.$_SESSION['name'].'&p='.$_SESSION['pass'].'\');ht=$(\'#videoPlayer\').html();$(\'#videoPlayer\').html(ht);return false;">'.$file_name.'</a></li>';
 						}
 					}
 					echo '</ul>';
@@ -34,23 +34,17 @@
 			?>	
 		</div>
 
-		<div class="span6">
+		<div class="span8">
 			<div class="separator"></div>
-			<div id="vlc1"></div>
+			<div id="videoPlayer">
+				<embed type="application/x-vlc-plugin" name="video1" autoplay="yes" loop="no" width="100%" height="80%" target="" />
+			</div>
 		</div>
 	</div>
 </div>
 
- 
-<script language="javascript" src="http://revolunet.github.com/VLCcontrols/src/jquery-vlc.js"></script> 
-<link rel="stylesheet" type="text/css" href="http://revolunet.github.com/VLCcontrols/src/styles.css" /> 
-
 <script type="text/javascript">
-	var player;
-	
 	window.onload=function(){
-		player = VLCobject.embedPlayer('vlc1', 400, 300); //On créé le lecteur VLC
-
 		//On affiche uniquement la racine
 		$('#mediaList ul').css('display', 'none');
 		$('#mediaList li').css('display', 'none');

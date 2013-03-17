@@ -1,4 +1,5 @@
-<?php	
+<?php
+	session_start();	
 	require_once('config.php');
 	
 	// Désactivation des guillemets magiques

@@ -3,11 +3,20 @@
 	require_once('../global/init.php');
 	require_once(ROOT_PATH.MODELE_PATH.'login.php');
 	require_once(ROOT_PATH.MODELE_PATH.'user.data.php');
+	require_once(ROOT_PATH.MODELE_PATH.'settings.php');
 	
 	if(!empty($_GET['u']) && !empty($_GET['p'])){ //Via API
 		//On vérifit les identifiants
 		$login = testLogin($_GET['u'], $_GET['p']);
 		if(!$login){exit('');}
+
+		if(!isset($user)){
+			//On récupère les infos sur l'user
+			$user = getUserArray();
+			foreach($user as $key => $us){
+				if($us['name'] == $_GET['u']){$user = $user[$key];break;}
+			}
+		}
 
 		//On vérifit qu'on est dans le bon dossier
 		if(preg_match('/\.\./', $_GET['file']) || (stripos($_GET['file'], $user['music_folder']) === false && stripos($_GET['file'], $user['video_folder']) === false && !preg_match('/https?:\/\//', $_GET['file']))){exit('ok');}
