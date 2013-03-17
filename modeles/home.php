@@ -7,7 +7,7 @@
 	*/
 	function getArborescence($folder, $extension){
 		$pointeur = opendir($folder); //on ouvre un pointeur sur le repertoire
-		$arborescence[] = $folder; //Première case => nom dossier
+		$arborescence[] = utf8_encode($folder); //Première case => nom dossier
 
 		//Récupération dossier dans l'ordre alphabétique
 		$sub_folder = scandir($folder, 2);
@@ -18,7 +18,7 @@
 					$arborescence[] = getArborescence($folder.'/'.$file, $extension);
 				}
 				else if(in_array(substr(strrchr($file,'.'),1), $extension)){ //Si fichier on vérifit l'extension
-					$arborescence[] = $folder.'/'.$file;
+					$arborescence[] = utf8_encode($folder.'/'.$file);
 				}
 			}
 		}
