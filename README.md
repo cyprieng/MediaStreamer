@@ -5,6 +5,8 @@ MediaStreamer is a light, open source, web-based media server. It allows you to 
 
 And obviously it scrobbles music on last.fm.
 
+![Mediastreamer](http://img20.imageshack.us/img20/1517/mediastreamer.png)
+
 Quick Start
 -----------------
 * Clone the repo, `git clone git://github.com/cyprieng/MediaStreamer.git` or [download the latest release](https://github.com/cyprieng/MediaStreamer/zipball/master).
