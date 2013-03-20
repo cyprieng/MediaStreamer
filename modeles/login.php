@@ -86,6 +86,8 @@
 			return array($_SESSION['name'], $_SESSION['pass']);
 		}
 		else if(isset($_COOKIE['name']) && isset($_COOKIE['pass'])){
+			$_SESSION['name'] = $_COOKIE['name'];
+			$_SESSION['pass'] = $_COOKIE['pass'];
 			return array($_COOKIE['name'], $_COOKIE['pass']);
 		}
 		else{
