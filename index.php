@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	require_once('global/init.php');
 	
 	if(is_file('install.php')){header('Location: install.php');} //Le fichier existe => installation
@@ -18,4 +19,5 @@
 	}
 
 	require_once(GLOBAL_PATH.'footer.php');
+	ob_end_flush();
 ?>
